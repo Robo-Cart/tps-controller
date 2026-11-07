@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://bsxsnx5ea3uj8"]
+
+[ext_resource type="Script" uid="uid://dbogl50q33v38" path="res://objects/ememies/test_enemy.gd" id="1_1j3kb"]
+[ext_resource type="Script" uid="uid://c0b6gnjlwcehl" path="res://objects/hit_box/hit_box.gd" id="2_78c3s"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_exgdw"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1j3kb"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_78c3s"]
+material = SubResource("StandardMaterial3D_1j3kb")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_7whwu"]
+radius = 0.55
+
+[node name="TestEnemy" type="CharacterBody3D" unique_id=914586530]
+script = ExtResource("1_1j3kb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1615751509]
+shape = SubResource("SphereShape3D_exgdw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1213752434]
+mesh = SubResource("SphereMesh_78c3s")
+
+[node name="HitBox" type="Area3D" parent="." unique_id=1026031260]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("2_78c3s")
+metadata/_custom_type_script = "uid://c0b6gnjlwcehl"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox" unique_id=571318011]
+shape = SubResource("SphereShape3D_7whwu")
+
+[connection signal="damage_take" from="HitBox" to="." method="_on_hit_box_damage_take"]

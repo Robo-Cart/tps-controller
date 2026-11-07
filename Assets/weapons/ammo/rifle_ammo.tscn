@@ -1,0 +1,26 @@
+[gd_scene load_steps=7 format=3 uid="uid://bdm6ka7pxwd1h"]
+
+[ext_resource type="PackedScene" uid="uid://bay71u80edrtx" path="res://Assets/weapons/ammo/Prop_Ammo.gltf" id="1_hmh01"]
+[ext_resource type="Script" uid="uid://bidwg2sdgwjcx" path="res://Assets/weapons/ammo/ammo_pick_up.gd" id="1_mf42c"]
+[ext_resource type="Script" uid="uid://xoelspd66ws" path="res://Player/weapon_manager/ammo/ammo_resource.gd" id="2_2ohbp"]
+[ext_resource type="Resource" uid="uid://d0737e2hyp4qf" path="res://Player/weapon_manager/ammo/ammo_resources/rifle_ammo.tres" id="3_4syi6"]
+[ext_resource type="Material" uid="uid://cf1ufcg6rodh" path="res://Assets/weapons/ammo/ammo.tres" id="6_2ohbp"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_nu8we"]
+points = PackedVector3Array(0.1903, 0.24898, 0.248113, 0.12748, 0.272394, -0.30672, 0.139454, 0.0085, -0.319907, -0.136348, 0.0085, 0.319976, -0.15329, 0.301062, 0.240924, -0.191542, 0.0085, -0.264815, -0.124854, 0.2728, -0.307754, 0.194498, 0.00856994, 0.264617, -0.291036, 0.0716375, 0.0687842, 0.0292017, 0.185138, 0.354812, 0.144943, 0.301062, -0.240852, 0.294087, 0.0716375, -0.0687842, 0.144943, 0.301062, 0.240852, -0.15329, 0.301062, -0.240924, -0.0367396, 0.0426007, -0.3499, -0.199521, 0.238838, 0.249978, -0.199528, 0.238841, -0.249987, 0.237712, 0.214878, -0.0419, 0.193763, 0.239772, -0.263608, -0.124854, 0.2728, 0.307754, 0.139454, 0.0085, 0.319976, -0.199692, 0.0105147, 0.25019, -0.291036, 0.0716375, -0.0687842, -0.234291, 0.214779, -0.0419, 0.194498, 0.00856994, -0.264617, 0.0292017, 0.185138, -0.354812, 0.139323, 0.240068, 0.319673, -0.136348, 0.0085, -0.319976, 0.294087, 0.0716375, 0.0687842, 0.0292495, 0.0408744, 0.355425, 0.193762, 0.239772, 0.263606, -0.0367396, 0.184678, 0.3499)
+
+[node name="RifleAmmo" type="RigidBody3D"]
+collision_layer = 4
+collision_mask = 5
+script = ExtResource("1_mf42c")
+pick_up = Array[ExtResource("2_2ohbp")]([ExtResource("3_4syi6"), ExtResource("3_4syi6")])
+
+[node name="Prop_Ammo2" parent="." instance=ExtResource("1_hmh01")]
+
+[node name="Prop_Ammo" parent="Prop_Ammo2" index="0"]
+material_override = ExtResource("6_2ohbp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_nu8we")
+
+[editable path="Prop_Ammo2"]

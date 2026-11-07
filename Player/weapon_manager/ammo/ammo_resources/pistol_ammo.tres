@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Ammo" load_steps=3 format=3 uid="uid://dlgtqwftkob3a"]
+
+[ext_resource type="PackedScene" uid="uid://b1lltqa227sfi" path="res://Player/weapon_manager/projectiles/rigid_body_projectile.tscn" id="1_4yjyn"]
+[ext_resource type="Script" uid="uid://xoelspd66ws" path="res://Player/weapon_manager/ammo/ammo_resource.gd" id="1_fn7si"]
+
+[resource]
+script = ExtResource("1_fn7si")
+ammo_type = "pistol"
+ammount = 9
+projectile = ExtResource("1_4yjyn")
+metadata/_custom_type_script = "uid://xoelspd66ws"

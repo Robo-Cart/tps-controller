@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="MovementStats" format=3 uid="uid://dtqtc4qjutq4v"]
+
+[ext_resource type="Script" uid="uid://dwxklir8iauv6" path="res://Player/movement_stats.gd" id="1_sn0m0"]
+
+[resource]
+script = ExtResource("1_sn0m0")
+time_to_jump_apex = 0.3
+time_to_land = 0.22
+jump_momentum_multiplier = 0.9
+aim_speed = 1.33
+roll_duration = 0.8

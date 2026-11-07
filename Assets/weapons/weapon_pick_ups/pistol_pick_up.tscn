@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://ck2tapyhdq213"]
+
+[ext_resource type="PackedScene" uid="uid://tc7nmsamrt3b" path="res://Assets/weapons/Gun_Pistol.fbx" id="1_52e1f"]
+[ext_resource type="Script" uid="uid://csthadcctgodd" path="res://Assets/weapons/weapon_pick_ups/weapon_pick_up.gd" id="1_lni0n"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lni0n"]
+size = Vector3(0.450623, 0.254913, 0.081604)
+
+[node name="PistolPickUp" type="RigidBody3D"]
+collision_layer = 4
+collision_mask = 5
+script = ExtResource("1_lni0n")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.149261, 0.0425873, -0.00643921)
+shape = SubResource("BoxShape3D_lni0n")
+
+[node name="Gun_Pistol" parent="." instance=ExtResource("1_52e1f")]
+
+[editable path="Gun_Pistol"]

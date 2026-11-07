@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="Weapon" format=3 uid="uid://diffkg8evpmev"]
+
+[ext_resource type="Script" uid="uid://dlk4bihqpf26h" path="res://Player/weapon_manager/weapon_resource.gd" id="1_c81c6"]
+[ext_resource type="Resource" uid="uid://dlgtqwftkob3a" path="res://Player/weapon_manager/ammo/ammo_resources/pistol_ammo.tres" id="1_iio7i"]
+[ext_resource type="PackedScene" uid="uid://b1lltqa227sfi" path="res://Player/weapon_manager/projectiles/rigid_body_projectile.tscn" id="1_jpyo4"]
+[ext_resource type="Script" uid="uid://xoelspd66ws" path="res://Player/weapon_manager/ammo/ammo_resource.gd" id="2_jpyo4"]
+[ext_resource type="PackedScene" uid="uid://cs5nbrcc7ju2a" path="res://Assets/weapons/weapons_to_load/pistol.tscn" id="4_nmevx"]
+[ext_resource type="Animation" uid="uid://cch4ebnk28frg" path="res://Assets/character_model/new_animations/change_weapon.res" id="5_inyfo"]
+[ext_resource type="Animation" uid="uid://b5k5mdy3s2n1e" path="res://Assets/character_model/new_animations/pistol_pose.res" id="6_vwh1e"]
+[ext_resource type="Animation" uid="uid://dejbr6mx8tjk7" path="res://Assets/character_model/new_animations/reload.res" id="8_52o8d"]
+[ext_resource type="Animation" uid="uid://bhd3af48mmnlf" path="res://Assets/character_model/new_animations/pistol_shoot.res" id="9_ati3b"]
+[ext_resource type="PackedScene" uid="uid://ck2tapyhdq213" path="res://Assets/weapons/weapon_pick_ups/pistol_pick_up.tscn" id="10_inyfo"]
+
+[sub_resource type="Resource" id="Resource_iio7i"]
+script = ExtResource("2_jpyo4")
+ammo_type = "pistol"
+ammount = 9
+projectile = ExtResource("1_jpyo4")
+metadata/_custom_type_script = "uid://xoelspd66ws"
+
+[resource]
+script = ExtResource("1_c81c6")
+name = "pistol"
+weapon_model = ExtResource("4_nmevx")
+impact_force = 15.0
+hand_position = Vector3(0.003, 0.05, 0.024)
+hand_rotation = Vector3(0.287979, -0.129154, -1.5708)
+weapon_idle_animation = ExtResource("6_vwh1e")
+weapon_shoot_animation = ExtResource("9_ati3b")
+weapon_reload_animation = ExtResource("8_52o8d")
+weapon_change_animation = ExtResource("5_inyfo")
+current_ammo = SubResource("Resource_iio7i")
+reserve_ammo = Array[ExtResource("2_jpyo4")]([ExtResource("1_iio7i"), ExtResource("1_iio7i")])
+weapon_to_drop = ExtResource("10_inyfo")

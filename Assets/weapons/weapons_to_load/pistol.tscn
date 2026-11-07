@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://cs5nbrcc7ju2a"]
+
+[ext_resource type="PackedScene" uid="uid://tc7nmsamrt3b" path="res://Assets/weapons/Gun_Pistol.fbx" id="1_cmjj8"]
+[ext_resource type="Script" uid="uid://b5inow6vddlld" path="res://Assets/weapons/weapons_to_load/weapon_model.gd" id="1_r5hw7"]
+[ext_resource type="Material" uid="uid://dysiug0vbwsit" path="res://Assets/weapons/weapons_to_load/weapon_material.tres" id="2_5k005"]
+
+[node name="Pistol" type="Node3D" node_paths=PackedStringArray("bullet_point")]
+script = ExtResource("1_r5hw7")
+bullet_point = NodePath("BulletPoint")
+
+[node name="BulletPoint" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.402075, 0.130122, 0)
+
+[node name="Gun_Pistol" parent="." instance=ExtResource("1_cmjj8")]
+
+[node name="Gun_Pistol" parent="Gun_Pistol" index="0"]
+layers = 3
+material_override = ExtResource("2_5k005")
+
+[editable path="Gun_Pistol"]

@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://hx8uroev01cp"]
+
+[ext_resource type="Script" uid="uid://csthadcctgodd" path="res://Assets/weapons/weapon_pick_ups/weapon_pick_up.gd" id="1_rgewm"]
+[ext_resource type="PackedScene" uid="uid://187rttbm7kfm" path="res://Assets/weapons/Gun_Rifle.fbx" id="5_rgewm"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lni0n"]
+size = Vector3(1.0647, 0.324234, 0.081604)
+
+[node name="RiflePickUp" type="RigidBody3D"]
+collision_layer = 4
+collision_mask = 5
+script = ExtResource("1_rgewm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.211121, 0.0772476, -0.00643921)
+shape = SubResource("BoxShape3D_lni0n")
+
+[node name="Gun_Rifle" parent="." instance=ExtResource("5_rgewm")]

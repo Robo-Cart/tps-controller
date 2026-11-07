@@ -1,0 +1,400 @@
+[gd_scene format=3 uid="uid://b5ed8gqb2aooc"]
+
+[ext_resource type="Script" uid="uid://bao72417mkest" path="res://Player/player.gd" id="1_bxdkk"]
+[ext_resource type="PackedScene" uid="uid://buhur2g6wr1fo" path="res://Assets/character_model/character_model.tscn" id="2_bxdkk"]
+[ext_resource type="Script" uid="uid://cntsymds2y4ve" path="res://Player/camera.gd" id="2_kkuwv"]
+[ext_resource type="Script" uid="uid://cbogwbgnb8r3a" path="res://Player/StateMachine/PlayerStateMachine/parent_state_machine.gd" id="4_pv5ew"]
+[ext_resource type="Script" uid="uid://b7oct4avy3kir" path="res://Player/StateMachine/parent_statemachine/unarmed.gd" id="5_fwu3r"]
+[ext_resource type="Script" uid="uid://bku8puxdp32eq" path="res://Player/StateMachine/PlayerStateMachine/player_state_machine.gd" id="6_ig0xb"]
+[ext_resource type="Resource" uid="uid://dtqtc4qjutq4v" path="res://Player/player_movement_stats.tres" id="7_w15lc"]
+[ext_resource type="Script" uid="uid://b8jpnjqcx2vw3" path="res://Player/StateMachine/PlayerStateMachine/States/idle.gd" id="8_ok3ce"]
+[ext_resource type="Script" uid="uid://bw6lfy78tiewg" path="res://Player/StateMachine/PlayerStateMachine/States/run.gd" id="9_kwf84"]
+[ext_resource type="Script" uid="uid://dv76vtqdisnut" path="res://Player/StateMachine/PlayerStateMachine/States/aim_idle.gd" id="10_hecoy"]
+[ext_resource type="Script" uid="uid://bsdp24gi5pm2n" path="res://Player/StateMachine/PlayerStateMachine/States/aim_walk.gd" id="11_q88jc"]
+[ext_resource type="Script" uid="uid://bdw41i04gohau" path="res://Player/StateMachine/PlayerStateMachine/States/sprint.gd" id="12_85ngi"]
+[ext_resource type="Script" uid="uid://w6f2hjt1r756" path="res://Player/StateMachine/PlayerStateMachine/States/jump.gd" id="13_dmfc8"]
+[ext_resource type="Script" uid="uid://b4v5xrhsma8co" path="res://Player/StateMachine/PlayerStateMachine/States/fall.gd" id="14_36lkv"]
+[ext_resource type="Script" uid="uid://bjfs6ct78t3a6" path="res://Player/StateMachine/PlayerStateMachine/States/sprint_jump.gd" id="15_atwvm"]
+[ext_resource type="Script" uid="uid://c7gk01rp2lqbc" path="res://Player/StateMachine/PlayerStateMachine/States/sprint_fall.gd" id="16_rrke4"]
+[ext_resource type="Script" uid="uid://ce6757iqs4odi" path="res://Player/StateMachine/parent_statemachine/armed.gd" id="17_xbgcw"]
+[ext_resource type="Script" uid="uid://bbgxs33pxx6fe" path="res://Player/weapon_manager/weapon_manager.gd" id="18_2qttc"]
+[ext_resource type="Script" uid="uid://dlk4bihqpf26h" path="res://Player/weapon_manager/weapon_resource.gd" id="19_c4sw0"]
+[ext_resource type="Resource" uid="uid://diffkg8evpmev" path="res://Player/weapon_manager/weapons/pistol.tres" id="20_s2i7l"]
+[ext_resource type="Resource" uid="uid://do87chfc1tmeo" path="res://Player/weapon_manager/weapons/rifle.tres" id="21_bootj"]
+[ext_resource type="Script" uid="uid://kwce3g6cdmhe" path="res://Player/weapon_manager/weapon_pick_up_area.gd" id="22_onsmf"]
+[ext_resource type="Script" uid="uid://bir3duuqjqom1" path="res://Player/ui.gd" id="23_q5tlw"]
+[ext_resource type="Script" uid="uid://cxlvbm5sxv2kt" path="res://Player/UI/ammo_ui.gd" id="24_yy5b4"]
+[ext_resource type="Script" uid="uid://di0hqmfuywat3" path="res://Player/model_view_camera.gd" id="25_4ln6c"]
+[ext_resource type="Script" uid="uid://duq2mjbb2uvlb" path="res://Player/StateMachine/PlayerStateMachine/States/roll.gd" id="26_roll1"]
+[ext_resource type="Script" uid="uid://dgap02cvwmimv" path="res://Player/StateMachine/PlayerStateMachine/States/crouch_idle.gd" id="27_crouchidle"]
+[ext_resource type="Script" uid="uid://cdrxu2n4j6mxr" path="res://Player/StateMachine/PlayerStateMachine/States/crouch_walk.gd" id="28_crouchwalk"]
+[ext_resource type="Script" uid="uid://rhg7hvdynxmr" path="res://Player/StateMachine/PlayerStateMachine/States/climb.gd" id="29_climb"]
+[ext_resource type="Script" uid="uid://dlldbpcf5eunv" path="res://Player/StateMachine/PlayerStateMachine/States/slide.gd" id="30_slide"]
+[ext_resource type="Script" path="res://Player/UI/stamina_ui.gd" id="31_stamina"]
+[ext_resource type="Script" path="res://Player/emote_controller.gd" id="32_emote"]
+[ext_resource type="Script" path="res://Player/UI/emote_menu.gd" id="33_emotemenu"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4ama0"]
+radius = 0.36523438
+height = 1.7744141
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_opk4b"]
+margin = 0.01
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_x13wl"]
+margin = 0.01
+radius = 0.1
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_8mwp6"]
+height = 1.0
+radius = 1.0
+
+[node name="Player" type="CharacterBody3D" unique_id=2029482978]
+collision_layer = 2
+script = ExtResource("1_bxdkk")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=456798072]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88720703, 0)
+shape = SubResource("CapsuleShape3D_4ama0")
+
+[node name="SlopeRayCast" type="RayCast3D" parent="." unique_id=1734567890]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+target_position = Vector3(0, 0, -0.5)
+
+[node name="CharacterModel" parent="." unique_id=1293393393 instance=ExtResource("2_bxdkk")]
+
+[node name="EmoteController" type="Node" parent="." unique_id=1999888777 node_paths=PackedStringArray("animation_controller", "emote_menu", "camera")]
+script = ExtResource("32_emote")
+animation_controller = NodePath("CharacterModel")
+emote_menu = NodePath("CanvasLayer/EmoteMenu")
+camera = NodePath("Camera")
+
+[node name="Camera" type="Node3D" parent="." unique_id=1765876147 node_paths=PackedStringArray("character", "edge_spring_arm", "rear_spring_arm", "camera", "model", "model_view_camera")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+script = ExtResource("2_kkuwv")
+character = NodePath("..")
+edge_spring_arm = NodePath("EdgeSpringArm")
+rear_spring_arm = NodePath("EdgeSpringArm/RearSpringArm")
+camera = NodePath("EdgeSpringArm/RearSpringArm/Camera3D")
+model = NodePath("../CharacterModel")
+model_view_camera = NodePath("../ModelViewCamera")
+aim_rear_spring_length = 0.7
+aim_edge_spring_length = 0.4
+aim_speed = 0.4
+aim_fov = 30.0
+sprint_fov = 90.0
+
+[node name="EdgeSpringArm" type="SpringArm3D" parent="Camera" unique_id=661210951]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+shape = SubResource("SphereShape3D_opk4b")
+spring_length = 0.5
+
+[node name="RearSpringArm" type="SpringArm3D" parent="Camera/EdgeSpringArm" unique_id=731406104]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+shape = SubResource("SphereShape3D_x13wl")
+spring_length = 1.5
+
+[node name="Camera3D" type="Camera3D" parent="Camera/EdgeSpringArm/RearSpringArm" unique_id=1480306059]
+transform = Transform3D(1, 0, 0, 0, 1, 3.7253e-09, 0, -3.7253e-09, 1, 0, 0, 0)
+
+[node name="FloorRayCast" type="RayCast3D" parent="." unique_id=1022976750]
+target_position = Vector3(0, -0.5, 0)
+
+[node name="StateMachine" type="Node" parent="." unique_id=1038745656 node_paths=PackedStringArray("weapon_manager", "start_state")]
+script = ExtResource("4_pv5ew")
+weapon_manager = NodePath("../WeaponManager")
+start_state = NodePath("Unarmed")
+
+[node name="Unarmed" type="Node" parent="StateMachine" unique_id=213753981 node_paths=PackedStringArray("state_machine")]
+script = ExtResource("5_fwu3r")
+state_machine = NodePath("UnarmedStateMachine")
+status = "non_combat"
+
+[node name="UnarmedStateMachine" type="Node" parent="StateMachine/Unarmed" unique_id=1519545206 node_paths=PackedStringArray("animation_controller", "start_state")]
+script = ExtResource("6_ig0xb")
+player_movement_stats = ExtResource("7_w15lc")
+animation_controller = NodePath("../../../CharacterModel")
+start_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine/Unarmed/UnarmedStateMachine" unique_id=736404580]
+script = ExtResource("8_ok3ce")
+on_enter_animation = "Idle"
+
+[node name="Run" type="Node" parent="StateMachine/Unarmed/UnarmedStateMachine" unique_id=2074430632]
+script = ExtResource("9_kwf84")
+on_enter_animation = "Run"
+
+[node name="AimIdle" type="Node" parent="StateMachine/Unarmed/UnarmedStateMachine" unique_id=1705615087]
+script = ExtResource("10_hecoy")
+on_enter_animation = "Idle"
+
+[node name="AimWalk" type="Node" parent="StateMachine/Unarmed/UnarmedStateMachine" unique_id=168053044]
+script = ExtResource("11_q88jc")
+on_enter_animation = "Walk"
+
+[node name="Sprint" type="Node" parent="StateMachine/Unarmed/UnarmedStateMachine" unique_id=189903619]
+script = ExtResource("12_85ngi")
+on_enter_animation = "Sprint"
+
+[node name="Jump" type="Node" parent="StateMachine/Unarmed/UnarmedStateMachine" unique_id=435036323]
+script = ExtResource("13_dmfc8")
+on_enter_animation = "Jump"
+
+[node name="Fall" type="Node" parent="StateMachine/Unarmed/UnarmedStateMachine" unique_id=1115827095 node_paths=PackedStringArray("floor_ray_cast")]
+script = ExtResource("14_36lkv")
+floor_ray_cast = NodePath("../../../../FloorRayCast")
+on_enter_animation = "Jump"
+
+[node name="SprintJump" type="Node" parent="StateMachine/Unarmed/UnarmedStateMachine" unique_id=529431590]
+script = ExtResource("15_atwvm")
+on_enter_animation = "SprintJump"
+
+[node name="SprintFall" type="Node" parent="StateMachine/Unarmed/UnarmedStateMachine" unique_id=1194246112 node_paths=PackedStringArray("floor_ray_cast")]
+script = ExtResource("16_rrke4")
+floor_ray_cast = NodePath("../../../../FloorRayCast")
+on_enter_animation = "SprintJump"
+
+[node name="Roll" type="Node" parent="StateMachine/Unarmed/UnarmedStateMachine" unique_id=312490877 node_paths=PackedStringArray("animation_controller")]
+script = ExtResource("26_roll1")
+animation_controller = NodePath("../../../../CharacterModel")
+on_enter_animation = "Run"
+
+[node name="Slide" type="Node" parent="StateMachine/Unarmed/UnarmedStateMachine" unique_id=1846647527 node_paths=PackedStringArray("animation_controller")]
+script = ExtResource("30_slide")
+animation_controller = NodePath("../../../../CharacterModel")
+on_enter_animation = "Slide"
+
+[node name="CrouchIdle" type="Node" parent="StateMachine/Unarmed/UnarmedStateMachine" unique_id=1846647521]
+script = ExtResource("27_crouchidle")
+on_enter_animation = "CrouchIdle"
+
+[node name="CrouchWalk" type="Node" parent="StateMachine/Unarmed/UnarmedStateMachine" unique_id=1846647522]
+script = ExtResource("28_crouchwalk")
+on_enter_animation = "CrouchWalk"
+
+[node name="Climb" type="Node" parent="StateMachine/Unarmed/UnarmedStateMachine" unique_id=1846647525 node_paths=PackedStringArray("animation_controller")]
+script = ExtResource("29_climb")
+animation_controller = NodePath("../../../../CharacterModel")
+on_enter_animation = "Idle"
+
+[node name="Armed" type="Node" parent="StateMachine" unique_id=1381275374 node_paths=PackedStringArray("_weapon_manager", "state_machine")]
+script = ExtResource("17_xbgcw")
+_weapon_manager = NodePath("../../WeaponManager")
+state_machine = NodePath("ArmedStateMachine")
+status = "combat"
+
+[node name="ArmedStateMachine" type="Node" parent="StateMachine/Armed" unique_id=616776800 node_paths=PackedStringArray("animation_controller", "start_state")]
+script = ExtResource("6_ig0xb")
+player_movement_stats = ExtResource("7_w15lc")
+animation_controller = NodePath("../../../CharacterModel")
+start_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine/Armed/ArmedStateMachine" unique_id=863326643]
+script = ExtResource("8_ok3ce")
+on_enter_animation = "Idle"
+
+[node name="Run" type="Node" parent="StateMachine/Armed/ArmedStateMachine" unique_id=730858596]
+script = ExtResource("9_kwf84")
+on_enter_animation = "Run"
+
+[node name="AimIdle" type="Node" parent="StateMachine/Armed/ArmedStateMachine" unique_id=399346344]
+script = ExtResource("10_hecoy")
+on_enter_animation = "Idle"
+
+[node name="AimWalk" type="Node" parent="StateMachine/Armed/ArmedStateMachine" unique_id=694113895]
+script = ExtResource("11_q88jc")
+on_enter_animation = "Walk"
+
+[node name="Sprint" type="Node" parent="StateMachine/Armed/ArmedStateMachine" unique_id=3968439]
+script = ExtResource("12_85ngi")
+on_enter_animation = "Sprint"
+
+[node name="Jump" type="Node" parent="StateMachine/Armed/ArmedStateMachine" unique_id=492300478]
+script = ExtResource("13_dmfc8")
+on_enter_animation = "Jump"
+
+[node name="Fall" type="Node" parent="StateMachine/Armed/ArmedStateMachine" unique_id=658067458 node_paths=PackedStringArray("floor_ray_cast")]
+script = ExtResource("14_36lkv")
+floor_ray_cast = NodePath("../../../../FloorRayCast")
+on_enter_animation = "Jump"
+
+[node name="SprintJump" type="Node" parent="StateMachine/Armed/ArmedStateMachine" unique_id=1686321104]
+script = ExtResource("15_atwvm")
+on_enter_animation = "SprintJump"
+
+[node name="SprintFall" type="Node" parent="StateMachine/Armed/ArmedStateMachine" unique_id=2089990199 node_paths=PackedStringArray("floor_ray_cast")]
+script = ExtResource("16_rrke4")
+floor_ray_cast = NodePath("../../../../FloorRayCast")
+on_enter_animation = "SprintJump"
+
+[node name="Roll" type="Node" parent="StateMachine/Armed/ArmedStateMachine" unique_id=1774503216 node_paths=PackedStringArray("animation_controller")]
+script = ExtResource("26_roll1")
+animation_controller = NodePath("../../../../CharacterModel")
+on_enter_animation = "Run"
+
+[node name="Slide" type="Node" parent="StateMachine/Armed/ArmedStateMachine" unique_id=1846647528 node_paths=PackedStringArray("animation_controller")]
+script = ExtResource("30_slide")
+animation_controller = NodePath("../../../../CharacterModel")
+on_enter_animation = "Slide"
+
+[node name="CrouchIdle" type="Node" parent="StateMachine/Armed/ArmedStateMachine" unique_id=1846647523]
+script = ExtResource("27_crouchidle")
+on_enter_animation = "CrouchIdle"
+
+[node name="CrouchWalk" type="Node" parent="StateMachine/Armed/ArmedStateMachine" unique_id=1846647524]
+script = ExtResource("28_crouchwalk")
+on_enter_animation = "CrouchWalk"
+
+[node name="Climb" type="Node" parent="StateMachine/Armed/ArmedStateMachine" unique_id=1846647526 node_paths=PackedStringArray("animation_controller")]
+script = ExtResource("29_climb")
+animation_controller = NodePath("../../../../CharacterModel")
+on_enter_animation = "Idle"
+
+[node name="WeaponManager" type="Node3D" parent="." unique_id=1663958791 node_paths=PackedStringArray("weapon_status_timer")]
+script = ExtResource("18_2qttc")
+weapons = Array[ExtResource("19_c4sw0")]([ExtResource("20_s2i7l"), ExtResource("21_bootj")])
+weapon_status_timer = NodePath("WeaponStatusTimer")
+
+[node name="WeaponStatusTimer" type="Timer" parent="WeaponManager" unique_id=1670358981]
+one_shot = true
+
+[node name="WeaponPickUpArea" type="Area3D" parent="WeaponManager" unique_id=46966409]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("22_onsmf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WeaponManager/WeaponPickUpArea" unique_id=1231005514]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("CylinderShape3D_8mwp6")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=491244625]
+script = ExtResource("23_q5tlw")
+
+[node name="Reticle" type="Control" parent="CanvasLayer" unique_id=1960987182]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Reticle" unique_id=239395180]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Reticle/CenterContainer" unique_id=1800024675]
+custom_minimum_size = Vector2(5, 5)
+layout_mode = 2
+
+[node name="AmmoUI" type="Control" parent="CanvasLayer" unique_id=1624295245]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+script = ExtResource("24_yy5b4")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/AmmoUI" unique_id=1341940654]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -71.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/separation = 4
+
+[node name="CurrentAmmoLabel" type="Label" parent="CanvasLayer/AmmoUI/HBoxContainer" unique_id=135822015]
+layout_mode = 2
+text = "99"
+
+[node name="Slash" type="Label" parent="CanvasLayer/AmmoUI/HBoxContainer" unique_id=645530065]
+layout_mode = 2
+text = "/"
+
+[node name="ReserveAmmoLabel" type="Label" parent="CanvasLayer/AmmoUI/HBoxContainer" unique_id=663194233]
+layout_mode = 2
+text = "99"
+
+[node name="StaminaUI" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -90.0
+offset_top = -48.0
+offset_right = 90.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+script = ExtResource("31_stamina")
+script = ExtResource("31_stamina")
+
+[node name="EmoteMenu" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("33_emotemenu")
+
+[node name="ModelViewCamera" type="Camera3D" parent="." unique_id=2137442616]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1727, 3.1338677)
+script = ExtResource("25_4ln6c")
+
+[connection signal="camera_rotated" from="Camera" to="CharacterModel" method="_on_camera_camera_rotated"]
+[connection signal="model_view_changed" from="Camera" to="StateMachine" method="_on_camera_model_view_changed"]
+[connection signal="model_view_changed" from="Camera" to="CanvasLayer" method="_on_camera_model_view_changed"]
+[connection signal="aim_entered" from="StateMachine/Unarmed/UnarmedStateMachine/AimIdle" to="Camera" method="_on_aim_entered"]
+[connection signal="aim_exited" from="StateMachine/Unarmed/UnarmedStateMachine/AimIdle" to="Camera" method="_on_aim_exited"]
+[connection signal="aim_entered" from="StateMachine/Unarmed/UnarmedStateMachine/AimWalk" to="Camera" method="_on_aim_entered"]
+[connection signal="aim_exited" from="StateMachine/Unarmed/UnarmedStateMachine/AimWalk" to="Camera" method="_on_aim_exited"]
+[connection signal="sprint_ended" from="StateMachine/Unarmed/UnarmedStateMachine/Sprint" to="Camera" method="_on_sprint_ended"]
+[connection signal="sprint_started" from="StateMachine/Unarmed/UnarmedStateMachine/Sprint" to="Camera" method="_on_sprint_sprint_started"]
+[connection signal="sprint_ended" from="StateMachine/Unarmed/UnarmedStateMachine/SprintJump" to="Camera" method="_on_sprint_ended"]
+[connection signal="sprint_ended" from="StateMachine/Unarmed/UnarmedStateMachine/SprintFall" to="Camera" method="_on_sprint_ended"]
+[connection signal="aim_entered" from="StateMachine/Unarmed/UnarmedStateMachine/CrouchIdle" to="Camera" method="_on_aim_entered"]
+[connection signal="aim_exited" from="StateMachine/Unarmed/UnarmedStateMachine/CrouchIdle" to="Camera" method="_on_aim_exited"]
+[connection signal="aim_entered" from="StateMachine/Unarmed/UnarmedStateMachine/CrouchWalk" to="Camera" method="_on_aim_entered"]
+[connection signal="aim_exited" from="StateMachine/Unarmed/UnarmedStateMachine/CrouchWalk" to="Camera" method="_on_aim_exited"]
+[connection signal="aim_entered" from="StateMachine/Armed/ArmedStateMachine/AimIdle" to="Camera" method="_on_aim_entered"]
+[connection signal="aim_exited" from="StateMachine/Armed/ArmedStateMachine/AimIdle" to="Camera" method="_on_aim_exited"]
+[connection signal="aim_entered" from="StateMachine/Armed/ArmedStateMachine/AimWalk" to="Camera" method="_on_aim_entered"]
+[connection signal="aim_exited" from="StateMachine/Armed/ArmedStateMachine/AimWalk" to="Camera" method="_on_aim_exited"]
+[connection signal="sprint_ended" from="StateMachine/Armed/ArmedStateMachine/Sprint" to="Camera" method="_on_sprint_ended"]
+[connection signal="sprint_started" from="StateMachine/Armed/ArmedStateMachine/Sprint" to="Camera" method="_on_sprint_sprint_started"]
+[connection signal="sprint_ended" from="StateMachine/Armed/ArmedStateMachine/SprintJump" to="Camera" method="_on_sprint_ended"]
+[connection signal="sprint_ended" from="StateMachine/Armed/ArmedStateMachine/SprintFall" to="Camera" method="_on_sprint_ended"]
+[connection signal="aim_entered" from="StateMachine/Armed/ArmedStateMachine/CrouchIdle" to="Camera" method="_on_aim_entered"]
+[connection signal="aim_exited" from="StateMachine/Armed/ArmedStateMachine/CrouchIdle" to="Camera" method="_on_aim_exited"]
+[connection signal="aim_entered" from="StateMachine/Armed/ArmedStateMachine/CrouchWalk" to="Camera" method="_on_aim_entered"]
+[connection signal="aim_exited" from="StateMachine/Armed/ArmedStateMachine/CrouchWalk" to="Camera" method="_on_aim_exited"]
+[connection signal="ammo_updated" from="WeaponManager" to="CanvasLayer/AmmoUI" method="_on_weapon_manager_ammo_updated"]
+[connection signal="weapon_changed" from="WeaponManager" to="CharacterModel" method="_on_weapon_manager_weapon_changed"]
+[connection signal="weapon_fired" from="WeaponManager" to="CharacterModel" method="_on_weapon_manager_weapon_fired"]
+[connection signal="weapon_manager_finished" from="WeaponManager" to="CharacterModel" method="_on_weapon_manager_weapon_manager_finished"]
+[connection signal="weapon_manager_finished" from="WeaponManager" to="CanvasLayer/AmmoUI" method="_on_weapon_manager_weapon_manager_finished"]
+[connection signal="weapon_manager_started" from="WeaponManager" to="CharacterModel" method="_on_weapon_manager_weapon_manager_started"]
+[connection signal="weapon_manager_started" from="WeaponManager" to="CanvasLayer/AmmoUI" method="_on_weapon_manager_weapon_manager_started"]
+[connection signal="weapon_realoded" from="WeaponManager" to="CharacterModel" method="_on_weapon_manager_weapon_realoded"]
+[connection signal="timeout" from="WeaponManager/WeaponStatusTimer" to="WeaponManager" method="_on_weapon_status_timer_timeout"]
+[connection signal="ammo_detected" from="WeaponManager/WeaponPickUpArea" to="WeaponManager" method="_on_weapon_pick_up_area_ammo_detected"]
+[connection signal="body_entered" from="WeaponManager/WeaponPickUpArea" to="WeaponManager/WeaponPickUpArea" method="_on_body_entered"]
+[connection signal="weapon_detected" from="WeaponManager/WeaponPickUpArea" to="WeaponManager" method="_on_weapon_pick_up_area_weapon_detected"]

@@ -1,0 +1,105 @@
+[gd_scene load_steps=18 format=3 uid="uid://dg2neh0k6unwg"]
+
+[ext_resource type="Script" path="res://Player/player.gd" id="1_i15hw"]
+[ext_resource type="Script" path="res://Player/camera.gd" id="2_v7nck"]
+[ext_resource type="Script" path="res://Player/StateMachine/PlayerStateMachine/player_state_machine.gd" id="3_sucq1"]
+[ext_resource type="Script" path="res://Player/StateMachine/PlayerStateMachine/States/idle.gd" id="4_2a8h6"]
+[ext_resource type="Resource" uid="uid://dtqtc4qjutq4v" path="res://Player/player_movement_stats.tres" id="4_ev668"]
+[ext_resource type="Script" path="res://Player/StateMachine/PlayerStateMachine/States/run.gd" id="5_7bujd"]
+[ext_resource type="Script" path="res://Player/StateMachine/PlayerStateMachine/States/jump.gd" id="6_1hjiy"]
+[ext_resource type="Script" path="res://Player/StateMachine/PlayerStateMachine/States/sprint.gd" id="6_1nx07"]
+[ext_resource type="Script" path="res://Player/StateMachine/PlayerStateMachine/States/aim_idle.gd" id="6_tdb7l"]
+[ext_resource type="Script" path="res://Player/StateMachine/PlayerStateMachine/States/aim_walk.gd" id="7_05wi5"]
+[ext_resource type="Script" path="res://Player/StateMachine/PlayerStateMachine/States/fall.gd" id="7_epggy"]
+[ext_resource type="Script" path="res://Player/StateMachine/PlayerStateMachine/States/sprint_jump.gd" id="9_405io"]
+[ext_resource type="Script" path="res://Player/StateMachine/PlayerStateMachine/States/sprint_fall.gd" id="10_xpjtg"]
+[ext_resource type="PackedScene" uid="uid://ddl6xrma2wh18" path="res://Assets/character_model/character_model.tscn" id="14_gevsf"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4ama0"]
+radius = 0.8
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_opk4b"]
+margin = 0.01
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_x13wl"]
+margin = 0.01
+radius = 0.1
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_i15hw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_4ama0")
+
+[node name="Camera" type="Node3D" parent="." node_paths=PackedStringArray("character", "edge_spring_arm", "rear_spring_arm", "camera", "model")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+script = ExtResource("2_v7nck")
+character = NodePath("..")
+edge_spring_arm = NodePath("EdgeSpringArm")
+rear_spring_arm = NodePath("EdgeSpringArm/RearSpringArm")
+camera = NodePath("EdgeSpringArm/RearSpringArm/Camera3D")
+model = NodePath("../CharacterModel")
+aim_rear_spring_length = 0.7
+aim_edge_spring_length = 0.4
+aim_speed = 0.4
+aim_fov = 30.0
+sprint_fov = 100.0
+
+[node name="EdgeSpringArm" type="SpringArm3D" parent="Camera"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+shape = SubResource("SphereShape3D_opk4b")
+spring_length = 0.4
+
+[node name="RearSpringArm" type="SpringArm3D" parent="Camera/EdgeSpringArm"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+shape = SubResource("SphereShape3D_x13wl")
+spring_length = 0.7
+
+[node name="Camera3D" type="Camera3D" parent="Camera/EdgeSpringArm/RearSpringArm"]
+transform = Transform3D(1, 0, 0, 0, 1, 3.7253e-09, 0, -3.7253e-09, 1, 0, 0, 0)
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("animation_controller", "start_state")]
+script = ExtResource("3_sucq1")
+player_movement_stats = ExtResource("4_ev668")
+animation_controller = NodePath("../CharacterModel")
+start_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("4_2a8h6")
+animation = "Idle"
+
+[node name="Run" type="Node" parent="StateMachine"]
+script = ExtResource("5_7bujd")
+
+[node name="AimIdle" type="Node" parent="StateMachine"]
+script = ExtResource("6_tdb7l")
+
+[node name="AimWalk" type="Node" parent="StateMachine"]
+script = ExtResource("7_05wi5")
+
+[node name="Sprint" type="Node" parent="StateMachine"]
+script = ExtResource("6_1nx07")
+
+[node name="Jump" type="Node" parent="StateMachine"]
+script = ExtResource("6_1hjiy")
+
+[node name="Fall" type="Node" parent="StateMachine"]
+script = ExtResource("7_epggy")
+
+[node name="SprintJump" type="Node" parent="StateMachine"]
+script = ExtResource("9_405io")
+
+[node name="SprintFall" type="Node" parent="StateMachine"]
+script = ExtResource("10_xpjtg")
+
+[node name="CharacterModel" parent="." instance=ExtResource("14_gevsf")]
+
+[connection signal="camera_rotated" from="Camera" to="CharacterModel" method="_on_camera_camera_rotated"]
+[connection signal="aim_entered" from="StateMachine/AimIdle" to="Camera" method="_on_aim_entered"]
+[connection signal="aim_exited" from="StateMachine/AimIdle" to="Camera" method="_on_aim_exited"]
+[connection signal="aim_entered" from="StateMachine/AimWalk" to="Camera" method="_on_aim_entered"]
+[connection signal="aim_exited" from="StateMachine/AimWalk" to="Camera" method="_on_aim_exited"]
+[connection signal="sprint_ended" from="StateMachine/Sprint" to="Camera" method="_on_sprint_ended"]
+[connection signal="sprint_started" from="StateMachine/Sprint" to="Camera" method="_on_sprint_sprint_started"]
+[connection signal="sprint_ended" from="StateMachine/SprintFall" to="Camera" method="_on_sprint_ended"]

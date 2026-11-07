@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="Weapon" format=3 uid="uid://do87chfc1tmeo"]
+
+[ext_resource type="PackedScene" uid="uid://b1lltqa227sfi" path="res://Player/weapon_manager/projectiles/rigid_body_projectile.tscn" id="1_itkvv"]
+[ext_resource type="Script" uid="uid://dlk4bihqpf26h" path="res://Player/weapon_manager/weapon_resource.gd" id="1_ys5gk"]
+[ext_resource type="Resource" uid="uid://d0737e2hyp4qf" path="res://Player/weapon_manager/ammo/ammo_resources/rifle_ammo.tres" id="1_yulix"]
+[ext_resource type="Script" uid="uid://xoelspd66ws" path="res://Player/weapon_manager/ammo/ammo_resource.gd" id="2_itkvv"]
+[ext_resource type="PackedScene" uid="uid://du4hkgfa1qqh3" path="res://Assets/weapons/weapons_to_load/rifle.tscn" id="4_h0xrm"]
+[ext_resource type="Animation" uid="uid://cch4ebnk28frg" path="res://Assets/character_model/new_animations/change_weapon.res" id="5_a08vo"]
+[ext_resource type="Animation" uid="uid://bpjkpnreforwv" path="res://Assets/character_model/new_animations/rifle_pose_2.res" id="6_fs3gp"]
+[ext_resource type="Animation" uid="uid://dejbr6mx8tjk7" path="res://Assets/character_model/new_animations/reload.res" id="8_gcpay"]
+[ext_resource type="Animation" uid="uid://cfewv6vki7x8t" path="res://Assets/character_model/new_animations/rifle_shoot.res" id="9_ldir8"]
+[ext_resource type="PackedScene" uid="uid://hx8uroev01cp" path="res://Assets/weapons/weapon_pick_ups/rifle_pick_up.tscn" id="10_a08vo"]
+
+[sub_resource type="Resource" id="Resource_yulix"]
+script = ExtResource("2_itkvv")
+ammo_type = "rifle"
+projectile = ExtResource("1_itkvv")
+metadata/_custom_type_script = "uid://xoelspd66ws"
+
+[resource]
+script = ExtResource("1_ys5gk")
+name = "rifle"
+weapon_model = ExtResource("4_h0xrm")
+auto_fire = true
+hand_position = Vector3(0.003, 0.05, 0.024)
+hand_rotation = Vector3(0.287979, -0.129155, -1.5708)
+weapon_idle_animation = ExtResource("6_fs3gp")
+weapon_shoot_animation = ExtResource("9_ldir8")
+weapon_reload_animation = ExtResource("8_gcpay")
+weapon_change_animation = ExtResource("5_a08vo")
+current_ammo = SubResource("Resource_yulix")
+reserve_ammo = Array[ExtResource("2_itkvv")]([ExtResource("1_yulix"), ExtResource("1_yulix")])
+max_ammo_clips = 3
+weapon_to_drop = ExtResource("10_a08vo")
